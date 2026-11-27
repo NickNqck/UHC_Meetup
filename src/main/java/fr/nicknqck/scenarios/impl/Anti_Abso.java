@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Anti_Abso extends BasicScenarios {
-	/* Le reste de du code est dans
+	/* Le reste du code est dans
 	 * fr.nicknqck.mtpds.ItemsManager
 	 * précisément le OnItemConsumed
 	 */

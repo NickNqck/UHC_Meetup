@@ -19,8 +19,8 @@ public final class Items {
 	public static ItemStack getAdminWatch() {
 		ItemStack stack = new ItemStack(Material.WATCH, 1);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Parametres de Jeu");
-		meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Cet item sert a configurer l'entièretée de la partie.", ChatColor.DARK_RED+"Seul les Administrateurs peuvent utiliser cet item!"));
+		meta.setDisplayName(ChatColor.GOLD+"Paramètres de jeu");
+		meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Cet item sert à configurer l'entièreté de la partie.", ChatColor.DARK_RED+"Seuls les administrateurs peuvent utiliser cet item !"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -32,7 +32,7 @@ public final class Items {
           meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
           meta.spigot().setUnbreakable(true);
           meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-          meta.setLore(Arrays.asList("§fUtilisation: "+ChatColor.GOLD+"Click Droit"));
+          meta.setLore(Arrays.asList("§fUtilisation: "+ChatColor.GOLD+"Clic droit"));
           stack.setItemMeta(meta);
           return stack;
       }
@@ -46,9 +46,9 @@ public final class Items {
 		  meta.setLore(Arrays.asList(ChatColor.WHITE+"Lame§a verte§r:§a NoFall",
 				  ChatColor.WHITE+"Lame§d Rose§r:§d 2"+ AllDesc.coeur,
 				  "§fLame§7 grise§r:§7 10% de Résistance",
-				  "§fLame§8 noir§r:§8 10% de Force",
+				  "§fLame§8 noire§r:§8 10% de Force",
 				  "§fLame§6 orange§r:§6 Fire Résistance",
-				  "§fLame§b bleu§r:§b 10% de Speed"));
+				  "§fLame§b bleue§r:§b 10% de Speed"));
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
@@ -113,29 +113,29 @@ public final class Items {
 	  public static ItemStack getSoufleFoudre4iememouvement() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"4ième mouvement du Soufle de la Foudre");
+		  meta.setDisplayName(ChatColor.GOLD+"4e mouvement du Souffle de la Foudre");
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 		  meta.spigot().setUnbreakable(true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
 	  public static ItemStack getPouvoirSanginaire() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire");
+		  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire");
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 		  meta.spigot().setUnbreakable(true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
 		public static ItemStack getkokushibosword() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Epée de la nuit");
+			meta.setDisplayName(ChatColor.GOLD+"Épée de la nuit");
 			meta.addEnchant(Enchantment.DAMAGE_ALL, 4, true);
 			meta.spigot().setUnbreakable(true);
 			stack.setItemMeta(meta);
@@ -144,22 +144,22 @@ public final class Items {
 		public static ItemStack getSoufleDeLeau() {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle De L'Eau");
+			meta.setDisplayName(ChatColor.GOLD+"Souffle De L'Eau");
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
 		public static ItemStack getSoufleDuFeu() {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle Du Feu");
+			meta.setDisplayName(ChatColor.GOLD+"Souffle Du Feu");
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -170,7 +170,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -197,22 +197,22 @@ public final class Items {
 		public static ItemStack getSoufleDeLaBrume() {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle De La Brume");
+			meta.setDisplayName(ChatColor.GOLD+"Souffle De La Brume");
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
 		public static ItemStack getSoufleDeLaRoche() {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle De La Roche");
+			meta.setDisplayName(ChatColor.GOLD+"Souffle De La Roche");
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -223,7 +223,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -234,7 +234,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -245,7 +245,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -256,7 +256,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -267,7 +267,7 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -278,14 +278,14 @@ public final class Items {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			stack.setItemMeta(meta);
 			return stack;
 		}
 		public static ItemStack getDomaEpouventaille() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Epouventaille de Glace");
+			meta.setDisplayName(ChatColor.GOLD+"Épouvantail de Glace");
 			meta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
 			meta.spigot().setUnbreakable(true);
 			stack.setItemMeta(meta);
@@ -294,22 +294,22 @@ public final class Items {
 		  public static ItemStack getDomaZonedeGlace() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire, Zone de Glace");
+			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire, Zone de Glace");
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
 		  public static ItemStack getDomaStatutdeGlace() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire, Statut de Glace");
+			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire, Statue de Glace");
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -320,7 +320,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -331,18 +331,18 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
 		  public static ItemStack getSoufleduSoleil() {
 				ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.setDisplayName(ChatColor.GOLD+"Soufle du Soleil");
+				meta.setDisplayName(ChatColor.GOLD+"Souffle du Soleil");
 				meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 				meta.spigot().setUnbreakable(true);
 				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -353,7 +353,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -364,7 +364,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -375,14 +375,14 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		//	  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
 		  public static ItemStack getHantenguUrogiFly() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire (Urogi), Fly");
+			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire (Urogi), Fly");
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -412,22 +412,22 @@ public final class Items {
 		  public static ItemStack getHantenguKarakuVent() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire (Karaku), Vent");
+			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire (Karaku), Vent");
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
 		  public static ItemStack getHantenguSekidoKakkhara() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire (Sekido), Kakkhara");
+			  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanguinaire (Sekido), Kakkhara");
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -438,7 +438,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -449,7 +449,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			 // meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -469,7 +469,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -480,7 +480,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -491,7 +491,7 @@ public final class Items {
 			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 			  meta.spigot().setUnbreakable(true);
 			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit (ouvre un menu)"+ChatColor.DARK_PURPLE+"."));
+			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit (ouvre un menu)"+ChatColor.DARK_PURPLE+"."));
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
@@ -502,7 +502,7 @@ public final class Items {
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 				meta.spigot().setUnbreakable(true);
 				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -521,15 +521,15 @@ public final class Items {
 				meta.setDisplayName(ChatColor.GOLD+"Matérialisation des émotions");
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 				stack.setItemMeta(meta);
 				return stack;
 			}
 			public static ItemStack getInfection() {
 				return new ItemBuilder(Material.NETHER_STAR)
 						.setName("§cInfection")
-						.setLore("§fOuvre un menu dans lequel il y aura tous les joueurs étant à moins de 30blocs de vous,",
-								"§f (si vous séléctionnez quelqu'un qui est déjà§c démon§f cela fonctionnera quand même)")
+						.setLore("§fOuvre un menu dans lequel il y aura tous les joueurs étant à moins de 30 blocs de vous,",
+								"§f (si vous sélectionnez quelqu'un qui est déjà§c démon§f cela fonctionnera quand même)")
 						.toItemStack();
 			}
 			public static ItemStack getKumoEmprisonnement() {
@@ -557,7 +557,7 @@ public final class Items {
 		         meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 		         meta.spigot().setUnbreakable(true);
 		         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 		         stack.setItemMeta(meta);
 		         return stack;
 		     }
@@ -568,7 +568,7 @@ public final class Items {
 		         meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 		         meta.spigot().setUnbreakable(true);
 		         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 		         stack.setItemMeta(meta);
 		         return stack;
 		     }
@@ -579,7 +579,7 @@ public final class Items {
 		         meta.addEnchant(Enchantment.DEPTH_STRIDER, 6, true);
 		         meta.spigot().setUnbreakable(true);
 		         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
+		         meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Clic droit"+ChatColor.DARK_PURPLE+"."));
 		         stack.setItemMeta(meta);
 		         return stack;
 		     }
@@ -589,7 +589,7 @@ public final class Items {
 		 		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, true);
 		 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		 		meta.setDisplayName("§r§fÉclair à la mort: ");
-		 		meta.setLore(Collections.singletonList("§r§fÉclair à la mort: "+(Main.getInstance().getGameConfig().isMortEclair() ? "§aActiver" : "§cDésactiver")));
+		 		meta.setLore(Collections.singletonList("§r§fÉclair à la mort: "+(Main.getInstance().getGameConfig().isMortEclair() ? "§aActivé" : "§cDésactivé")));
 		 		stack.setItemMeta(meta);
 		 		return stack;
 		 	}

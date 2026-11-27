@@ -19,7 +19,7 @@ public class AntiDrop extends BasicScenarios {
 
 	@Override
 	public ItemStack getAffichedItem() {
-		return new ItemBuilder(Material.HOPPER).setName(getName()).setLore("§fl'"+getName()+"§f est actuellement: "+ (AntiDrop ? "§aActivé" : "§cDésactivé")).toItemStack();
+		return new ItemBuilder(Material.HOPPER).setName(getName()).setLore("§fL'"+getName()+"§f est actuellement: "+ (AntiDrop ? "§aActivé" : "§cDésactivé")).toItemStack();
 	}
 	@Override
 	public void onClick(Player player) {

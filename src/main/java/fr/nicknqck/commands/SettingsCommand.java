@@ -32,26 +32,26 @@ public class SettingsCommand implements CommandExecutor, Listener {
         final FastInv fastInv = new FastInv(27, "§fParamètres");
         fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
         fastInv.setItem(12, new ItemBuilder(Material.REDSTONE).setName("§fAfficher les particules des rôles")
-                .setLore("§7Lorsqu'§aactiver§7, vous verrez des particules lorsque vous essayez de viser avec un pouvoir",
+                .setLore("§7Lorsqu'§aactivé§7, vous verrez des particules lorsque vous essayez de viser avec un pouvoir",
                         "",
-                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isShowRoleParticle() ? "§aActiver" : "§cDésactiver"))
+                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isShowRoleParticle() ? "§aActivé" : "§cDésactivé"))
                 .toItemStack(), event -> {
             final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getWhoClicked().getUniqueId());
             info.setShowRoleParticle(!info.isShowRoleParticle());
-            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fAfficher les particules des rôles§7\" est maintenant sur "+(info.isShowRoleParticle() ? "§aActiver" : "§cDésactiver"));
+            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fAfficher les particules des rôles§7\" est maintenant sur "+(info.isShowRoleParticle() ? "§aActivé" : "§cDésactivé"));
             Main.getInstance().getInfoManager().save(event.getWhoClicked().getUniqueId());
             openParamInv((Player) event.getWhoClicked());
         });
         fastInv.setItem(14, new ItemBuilder(Material.DIAMOND_SWORD)
                 .setName("§fEmpêcher le drop d'§cépée")
-                .setLore("§7Lorsqu'§aactiver§7, vous ne pourrez plus jeter vos§cc épées§7.",
-                        "§o§7(sauf si vous êtes accroupie)",
+                .setLore("§7Lorsqu'§aactivé§7, vous ne pourrez plus jeter vos§c épées§7.",
+                        "§o§7(sauf si vous êtes accroupi(e))",
                         "",
-                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isAntiDropSword() ? "§aActiver" : "§cDésactiver"))
+                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isAntiDropSword() ? "§aActivé" : "§cDésactivé"))
                 .toItemStack(), event -> {
             final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getWhoClicked().getUniqueId());
             info.setAntiDropSword(!info.isAntiDropSword());
-            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fEmpêcher le drop d'§cépée§7\" est maintenant définie sur: "+(info.isAntiDropSword() ? "§aActiver" : "§cDésactiver"));
+            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fEmpêcher le drop d'§cépée§7\" est maintenant défini sur : "+(info.isAntiDropSword() ? "§aActivé" : "§cDésactivé"));
             Main.getInstance().getInfoManager().save(event.getWhoClicked().getUniqueId());
             openParamInv((Player) event.getWhoClicked());
         });
@@ -64,7 +64,7 @@ public class SettingsCommand implements CommandExecutor, Listener {
         final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getPlayer().getUniqueId());
         if (info.isAntiDropSword() && isSword(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(Main.getInstance().getNAME()+"§7 Vos paramètres vous empêche de jeter votre§c épéé§7.");
+            event.getPlayer().sendMessage(Main.getInstance().getNAME()+"§7 Vos paramètres vous empêchent de jeter votre§c épée§7.");
         }
     }
     /**

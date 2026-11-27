@@ -78,7 +78,7 @@ public class Isobu extends BijuBase {
     public @NonNull String[] getItemDescription() {
         return new String[] {
                 "§7À son activation vous confère les pouvoirs de "+this.getName()+"§7 pendant §c5 minutes §7:",
-                "§8 - §9Résistance 1 §7 et §c2 coeurs supplémentaire§7 pendant §c5 minutes",
+                "§8 - §9Résistance 1 §7 et §c2 cœurs supplémentaires§7 pendant §c5 minutes",
                 "§8 - §7En prenant un coup vous avez§c 10%§7 de§c chance§7 d'§cesquiver le coup."
         };
     }

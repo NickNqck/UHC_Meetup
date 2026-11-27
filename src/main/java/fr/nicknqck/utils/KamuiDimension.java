@@ -52,7 +52,7 @@ public final class KamuiDimension implements ISubRoleWorld {
         this.locationList.add(new Location(world, -14.0, 22.5, -12.5, -47.4f, 1.6f));
         this.locationList.add(new Location(world, 15.2, 21.1, -15.0, 44.4f, -0.5f));
         this.locationList.add(new Location(world, -15.3, 21.1, 15.2, -134.4f, -0.5f));
-        Main.getInstance().debug(Main.getInstance().getNAME()+" Fin de creation du monde "+getWorldName());
+        Main.getInstance().debug(Main.getInstance().getNAME()+" Fin de création du monde "+getWorldName());
         return world;
     }
 

@@ -52,7 +52,7 @@ public class DiamondLimit extends BasicScenarios {
 
 	@Override
 	public ItemStack getAffichedItem() {
-		return new ItemBuilder(Material.DIAMOND_BLOCK).setName(getName()).setLore("§fLa "+getName()+" est actuellement: "+(alimit ? "§aActivé" : "§cDésactivé"),"§r§fLe nombre maximal de diamant minable est:§b"+getmaxdiams()).toItemStack();
+		return new ItemBuilder(Material.DIAMOND_BLOCK).setName(getName()).setLore("§fLa "+getName()+" est actuellement: "+(alimit ? "§aActivé" : "§cDésactivé"),"§r§fLe nombre maximal de diamants minables est :§b "+getmaxdiams()).toItemStack();
 	}
 
 	@Override

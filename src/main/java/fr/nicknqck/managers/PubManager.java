@@ -64,7 +64,7 @@ public class PubManager {
     // ── Suppression ──────────────────────────────────────────────────────────
 
     /**
-     * Supprime le message associé au numéro donné, puis renumérotise
+     * Supprime le message associé au numéro donné, puis renumérote
      * toutes les entrées suivantes (ex: 4→3, 5→4, etc.).
      *
      * @param number le numéro à supprimer
@@ -88,7 +88,7 @@ public class PubManager {
     }
 
     /**
-     * Supprime la première occurrence du message donné et renumérotise.
+     * Supprime la première occurrence du message donné et renumérote.
      *
      * @param message le message à supprimer
      * @return {@code true} si le message a été trouvé et supprimé

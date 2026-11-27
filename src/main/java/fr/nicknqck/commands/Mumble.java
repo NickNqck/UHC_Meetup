@@ -25,11 +25,11 @@ public class Mumble implements CommandExecutor {
                     Main.getInstance().getConfig().set("mumble", args[1]);
                     Main.getInstance().getConfig().set("port", args[2]);
                     Main.getInstance().saveConfig();
-                    sender.sendMessage("Mumble définit avec succès !");
+                    sender.sendMessage("Mumble défini avec succès !");
                     return true;
                 }
                 else {
-                    sender.sendMessage("§cErreur, esssayez /mumble set <mumble> <port>");
+                    sender.sendMessage("§cErreur, essayez /mumble set <mumble> <port>");
                     return false;
                 }
             }

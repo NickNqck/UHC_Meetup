@@ -58,7 +58,7 @@ public class CutClean extends BasicScenarios {
 	public static ItemStack getXpCharbon(GameState gameState) {
 		  ItemStack stack = new ItemStack(Material.COAL, 1);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName("Point d'xp en plus pour le §6charbon");
+		  meta.setDisplayName("Points d'XP en plus pour le §6charbon");
 		  meta.setLore(Arrays.asList(""+gameState.xpcharbon,
 				  "De base: §6"+BlockManager.xpcharbon));
 		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);
@@ -69,7 +69,7 @@ public class CutClean extends BasicScenarios {
 	  public static ItemStack getXpFer(GameState gameState) {
 		  ItemStack stack = new ItemStack(Material.IRON_INGOT, 1);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName("Point d'xp en plus pour le §6fer");
+		  meta.setDisplayName("Points d'XP en plus pour le §6fer");
 		  meta.setLore(Arrays.asList(""+gameState.xpfer,
 				  "De base: §6"+BlockManager.xpfer));
 		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);
@@ -80,7 +80,7 @@ public class CutClean extends BasicScenarios {
 	 public static ItemStack getXpOr(GameState gameState) {
 		  ItemStack stack = new ItemStack(Material.GOLD_INGOT, 1);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName("Point d'xp en plus pour le §6or");
+		  meta.setDisplayName("Points d'XP en plus pour le §6or");
 		  meta.setLore(Arrays.asList(""+gameState.xpor,
 				  "De base: §6"+BlockManager.xpor));
 		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);
@@ -91,7 +91,7 @@ public class CutClean extends BasicScenarios {
 	 public static ItemStack getXpDiams(GameState gameState) {
 		  ItemStack stack = new ItemStack(Material.DIAMOND, 1);
 		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName("Point d'xp en plus pour le §6Diamant");
+		  meta.setDisplayName("Points d'XP en plus pour le §6Diamant");
 		  meta.setLore(Arrays.asList(""+gameState.xpdiams,
 				  "De base: "+BlockManager.xpdiams));
 		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);

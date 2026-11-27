@@ -142,7 +142,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                     stringList.add(getChakraLine((NSRoles) iRole));
                 }
                 if (iRole instanceof IUncompatibleRole) {
-                    StringBuilder sb = new StringBuilder("§7Ce rôle est incompatible avec le/les role(s): ");
+                    StringBuilder sb = new StringBuilder("§7Ce rôle est incompatible avec le/les rôle(s) : ");
                     boolean first = true;
                     for (IRoles<?> iRoles : ((IUncompatibleRole) iRole).getUncompatibleList()) {
                         if (!first) {

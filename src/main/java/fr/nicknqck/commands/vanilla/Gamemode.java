@@ -98,7 +98,7 @@ public class Gamemode implements CommandExecutor {
 		if (mode == GameMode.ADVENTURE) {
 			goodName = "§cAventure";
 		} else if (mode == GameMode.CREATIVE) {
-			goodName = "§cCreatif";
+			goodName = "§cCréatif";
 		} else if (mode == GameMode.SPECTATOR) {
 			goodName = "§cSpectateur";
 		} else {
@@ -109,7 +109,7 @@ public class Gamemode implements CommandExecutor {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp() && p.getUniqueId() != changed.getUniqueId()) {
 				if (sender instanceof Player && ((Player) sender).getUniqueId() != changed.getUniqueId()) {
-					p.sendMessage(sender.getName()+"§7 a définit le mode de jeu de§f "+changed.getName()+"§7 sur "+goodName);
+					p.sendMessage(sender.getName()+"§7 a défini le mode de jeu de§f "+changed.getName()+"§7 sur "+goodName);
 				} else {
 					p.sendMessage(changed.getName()+"§7 est maintenant en "+goodName);
 				}

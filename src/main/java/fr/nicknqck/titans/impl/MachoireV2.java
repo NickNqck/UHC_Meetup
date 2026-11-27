@@ -43,7 +43,7 @@ public class MachoireV2 extends TitanBase implements Listener {
                 " \n"+
                 "§8 -§7 Lorsque vous êtes transformé en titan vous avez l'effet§c Speed I§7 ainsi que§a No Fall§7.\n"+
                 " \n"+
-                "§8 -§7 Vous pouvez utiliser votre item \"§aSaut§7\" pour effectuer un grand bon en avant.\n"+
+                "§8 -§7 Vous pouvez utiliser votre item \"§aSaut§7\" pour effectuer un grand bond en avant.\n"+
                 " \n"+
                 "§8 -§7 Lorsque vous êtes transformé, vous passez à travers la résistance des gens que vous frappez§7.";
     }
@@ -89,7 +89,7 @@ public class MachoireV2 extends TitanBase implements Listener {
 
         protected JumpPower(@NonNull RoleBase role, MachoireV2 machoire) {
             super("Saut", new Cooldown(25), new ItemBuilder(Material.SLIME_BALL).setName("§aSaut").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), role,
-                    "§7Les informations sur ce pouvoirs sont contenue dans votre§6 /aot titan");
+                    "§7Les informations sur ce pouvoir sont contenues dans votre§6 /aot titan");
             this.machoire = machoire;
             setShowInDesc(false);
         }

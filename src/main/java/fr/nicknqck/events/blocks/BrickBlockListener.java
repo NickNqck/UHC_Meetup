@@ -21,7 +21,7 @@ public class BrickBlockListener implements Listener {
 
     private final Map<Block, Long> blockMap = new HashMap<>();
     private final List<Block> blocksToDestroy = new ArrayList<>();
-//toute ce qui concerne cette class a été crée par chatgpt
+//tout ce qui concerne cette classe a été créé par ChatGPT
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
     	if (GameState.getInstance().getServerState() != ServerStates.InLobby) {

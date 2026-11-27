@@ -605,7 +605,7 @@ public class Schematic {
 
     /**
      * Convertit une vitesse en blocs/seconde en un couple (blocs par exécution, période en ticks),
-     * pour rester proche de la vitesse demandée même en-dessous de 20 blocs/seconde
+     * pour rester proche de la vitesse demandée même en dessous de 20 blocs/seconde
      * (1 exécution par tick minimum équivalant déjà à 20 blocs/sec).
      *
      * @param blocksPerSecond Vitesse voulue, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.

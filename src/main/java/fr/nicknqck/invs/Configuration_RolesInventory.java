@@ -17,7 +17,7 @@ public class Configuration_RolesInventory extends FastInv {
         super(9*3, "§7(§c!§7) §fConfiguration§7 ->§6 Roles");
 
         if (GameState.getInstance().isAllMdjNull()) {
-            setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
+            setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeu activé !").toItemStack());
         } else {
             for (@NonNull final IMDJ imdj : Main.getInstance().getGameConfig().getPlayableMdj()) {
                 if (!imdj.equals(GameState.getInstance().getMdj()))continue;
@@ -34,12 +34,12 @@ public class Configuration_RolesInventory extends FastInv {
                 new SelectModeDeJeuInventory().open((Player) event.getWhoClicked());
             });
             if (GameState.getInstance().isAllMdjNull()) {
-                setItem(18, new ItemBuilder(Material.CAULDRON_ITEM).setName("§fAppuyer pour configurer d'autres modes de jeux").toItemStack(), inventoryClickEvent -> new MDJConfigInventory().open(player));
+                setItem(18, new ItemBuilder(Material.CAULDRON_ITEM).setName("§fAppuyez pour configurer d'autres modes de jeu").toItemStack(), inventoryClickEvent -> new MDJConfigInventory().open(player));
             } else {
                 final IMDJ mdj = GameState.getInstance().getMdj();
                 if (mdj != null) {
                     if (Main.getInstance().getGameConfig().getConfigurablesMdj().containsKey(mdj)) {
-                        setItem(18, new ItemBuilder(mdj.getItem()).setName("§fAppuyer pour configurer le mode "+mdj.getItem().getItemMeta().getDisplayName()).setLore().toItemStack(), event -> {
+                        setItem(18, new ItemBuilder(mdj.getItem()).setName("§fAppuyez pour configurer le mode "+mdj.getItem().getItemMeta().getDisplayName()).setLore().toItemStack(), event -> {
                             try {
                                 final FastInv inv = Main.getInstance().getGameConfig().getConfigurablesMdj().get(mdj).newInstance();
                                 inv.open((Player) event.getWhoClicked());

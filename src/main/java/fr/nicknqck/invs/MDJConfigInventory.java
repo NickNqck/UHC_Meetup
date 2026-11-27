@@ -20,7 +20,7 @@ public class MDJConfigInventory extends PaginatedFastInv {
             .bindPagination('1');
 
     public MDJConfigInventory() {
-        super(9*3, "§fConfiguration§7 ->§a Modes de jeux");
+        super(9*3, "§fConfiguration§7 ->§a Modes de jeu");
         previousPageItem(20, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + lastPage()).toItemStack());
         nextPageItem(24, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + lastPage()).toItemStack());
 

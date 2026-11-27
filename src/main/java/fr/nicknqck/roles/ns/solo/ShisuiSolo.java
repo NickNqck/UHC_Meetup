@@ -140,7 +140,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         }
     }
     @EventHandler
-    private void onStartIzanami(@NonNull final IzanamiStartEvent event) {//Toute ces choses pour ne pas avoir certaines missions
+    private void onStartIzanami(@NonNull final IzanamiStartEvent event) {//Toutes ces choses pour ne pas avoir certaines missions
         @NonNull final List<IzanamiV2.MissionUser> muLIST = new ArrayList<>();
         @NonNull final List<IzanamiV2.MissionTarget> mtLIST = new ArrayList<>();
         for (@NonNull final IzanamiV2.MissionUser mu : event.getMissionUserList()) {
@@ -359,7 +359,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                     "§7Vous permet d'§aactiver§7 ou de§c désactiver§7 votre§c Shuriken Jutsu§7",
                     "",
                     "§7Quand il est§a activé§7 en faisant§c clic droit§7 avec une§c épée§7 vous pourrez lancer une§c flèche§7 qui,",
-                    "§7Si elle touche un joueur lui infligera un effet de§c stun§7 pendant§c 0,5s",
+                    "§7si elle touche un joueur, lui infligera un effet de§c stun§7 pendant§c 0,5s",
                     "",
                     "§cAttention, par défaut ce pouvoir est§4 désactivé");
             EventUtils.registerRoleEvent(this);

@@ -29,7 +29,7 @@ public class DropCommand implements CommandExecutor {
 				sender.sendMessage("Il faut avoir un item en main !");
 			}
 		}else {
-			System.out.println("Il faut etre un joueur pour drop un item");
+			System.out.println("Il faut être un joueur pour drop un item");
 		}
 		return true;
 	}

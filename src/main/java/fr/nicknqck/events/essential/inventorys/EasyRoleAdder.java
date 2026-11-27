@@ -22,7 +22,7 @@ public final class EasyRoleAdder {
                 if (iRole instanceof IUncompatibleRole) {
                     for (final IRoles<?> uncampatibleClass : ((IUncompatibleRole) iRole).getUncompatibleList()) {
                         if (GameState.getInstance().getAvailableRoles().containsKey(uncampatibleClass) && GameState.getInstance().getAvailableRoles().get(uncampatibleClass) > 0) {
-                            Main.getInstance().sendMessageToHosts("§cImpossible d'ajouter le rôle§b "+name+"§c, l'un des rôles incompatible est déjà dans la composition de la partie !");
+                            Main.getInstance().sendMessageToHosts("§cImpossible d'ajouter le rôle§b "+name+"§c, l'un des rôles incompatibles est déjà dans la composition de la partie !");
                             return;
                         }
                     }

@@ -174,7 +174,7 @@ public class TornadoWaveEffect {
 
     /**
      * Enflamme le joueur pendant {@code FIRE_DURATION} ticks sans possibilité de s'éteindre.
-     * Les fire ticks sont rafraîchis chaque tick, annulant tout tentative d'extinction
+     * Les fire ticks sont rafraîchis chaque tick, annulant toute tentative d'extinction
      * (eau, pluie, lait, etc.).
      * Une seule tâche est lancée par joueur même s'il est touché plusieurs fois.
      */

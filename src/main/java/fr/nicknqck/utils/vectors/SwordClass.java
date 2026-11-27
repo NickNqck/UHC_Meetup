@@ -117,7 +117,7 @@ public class SwordClass {
            pls = s.stream().min(Comparator.comparingDouble(value -> value.getLocation().distance(sword.getLocation()))).orElse(null);
         }
         if(pls == null){
-            pl.sendMessage("§4Vous ne pouvez pas lancer votre épée personne n'est proche !");
+            pl.sendMessage("§4Vous ne pouvez pas lancer votre épée, personne n'est proche !");
             return;
         }
         a.remove(sword);

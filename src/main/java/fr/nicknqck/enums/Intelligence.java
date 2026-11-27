@@ -7,7 +7,7 @@ public enum Intelligence {
 
     PEUINTELLIGENT("Peu intelligent", 60*20),
     MOYENNE("Moyenne", 60*15),
-    CONNUE("Shikamaru connait l'identité des roles qui on cette stat la", 60*15),
+    CONNUE("Shikamaru connaît l'identité des rôles qui ont cette stat-là", 60*15),
     INTELLIGENT("Intelligent", 60*10),
     GENIE("Génie", 60*5);
 

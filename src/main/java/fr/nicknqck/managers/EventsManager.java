@@ -101,14 +101,14 @@ public class EventsManager implements Listener {
                         return;
                     }
                     final String name = item.getItemMeta().getDisplayName();
-                    if (name.equals("§bTemp minimum")) {
+                    if (name.equals("§bTemps minimum")) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                             gameEvent.setMinTimeProc(Math.min(gameEvent.getMaxTimeProc(), gameEvent.getMinTimeProc()+60));
                         } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                             gameEvent.setMinTimeProc(Math.max(120, gameEvent.getMinTimeProc())-60);
                         }
                     }
-                    if (name.equals("§bTemp maximum")) {
+                    if (name.equals("§bTemps maximum")) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                             gameEvent.setMaxTimeProc(gameEvent.getMaxTimeProc()+60);
                         } else if (action.equals(InventoryAction.PICKUP_HALF)){
@@ -144,25 +144,25 @@ public class EventsManager implements Listener {
         final int minTime = event.getMinTimeProc();
         final int maxTime = event.getMaxTimeProc();
         final boolean enable = event.isEnable();
-        gameInv.setItem(9, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
+        gameInv.setItem(9, new ItemBuilder(Material.WATCH).setName("§bTemps minimum").setLore(
                 "",
                 "§fClic gauche: §a+1 minute",
                 "",
                 "§fClic droit: §c-1 minute",
                 "",
-                "§bTemp minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
+                "§bTemps minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
         ).toItemStack());
         gameInv.setItem(5, new ItemBuilder(Material.STAINED_CLAY)
                 .setDurability((enable ? 5 : 14))
                 .setName((enable ? "§aActivé" : "§cDésactivé"))
                 .toItemStack());
-        gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
+        gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemps maximum").setLore(
                 "",
                 "§fClic gauche: §a+1 minute",
                 "",
                 "§fClic droit: §c-1 minute",
                 "",
-                "§bTemp maximum actuel: §c"+ StringUtils.secondsTowardsBeautiful(maxTime)
+                "§bTemps maximum actuel: §c"+ StringUtils.secondsTowardsBeautiful(maxTime)
         ).toItemStack());
         gameInv.setItem(3, new ItemBuilder(Material.SIGN).setName("§fDescriptions de l'Event").setLore(event.getExplications()).toItemStack());
         gameInv.setItem(15, new ItemBuilder(Material.WATCH).setName("§bPourcentage (§cdiminution§b)").setLore(

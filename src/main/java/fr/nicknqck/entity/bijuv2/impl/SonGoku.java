@@ -81,7 +81,7 @@ public class SonGoku extends BijuBase {
         return new String[] {
                 "§7À son activation vous offre les pouvoirs de "+this.getName()+"§7:",
                 "§8 -§7 §bSpeed I§7 et§6 Fire Résistance I§7 pendant §c5 minutes",
-                "§8 -§7 Quand vous prenez des dégâts de chute, ils seront infligé à la place au joueurs proche de vous"
+                "§8 -§7 Quand vous prenez des dégâts de chute, ils seront infligés à la place aux joueurs proches de vous"
         };
     }
 

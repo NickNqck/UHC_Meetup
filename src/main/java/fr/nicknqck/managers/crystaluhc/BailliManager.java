@@ -115,7 +115,7 @@ public class BailliManager implements Listener {
             int x = location.getBlockX();
             int y = location.getBlockY();
             int z = location.getBlockZ();
-            gamePlayer.sendMessage("§aBailli Thomas§7: Bien sur ! Je m'en souviens§c "+getGamePlayer().getPlayerName()+"§7 est mort ici§c x: "+x+"§7,§c y: "+y+"§7,§c z: "+z);
+            gamePlayer.sendMessage("§aBailli Thomas§7: Bien sûr ! Je m'en souviens§c "+getGamePlayer().getPlayerName()+"§7 est mort ici§c x: "+x+"§7,§c y: "+y+"§7,§c z: "+z);
         }
 
         @Override

@@ -145,7 +145,7 @@ public abstract class ItemPower extends Power {
             }
             if (!this.gamePlayer.isAlive())return;
             if (!this.itemPower.isShowCdInHand())  {
-                Main.getInstance().debug("Cancelled "+this+" for "+user+" because ce n'etait pas cense start de base");
+                Main.getInstance().debug("Cancelled "+this+" for "+user+" because ce n'était pas censé démarrer de base");
                 cancel();
                 return;
             }

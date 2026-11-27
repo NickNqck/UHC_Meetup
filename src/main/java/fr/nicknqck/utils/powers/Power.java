@@ -61,7 +61,7 @@ public abstract class Power implements Cloneable{
         int use = this.getUse();
 
         if (use >= maxUse && maxUse != -1) {
-            player.sendMessage("§cVous avez atteint le nombre maximum d'utilisation pour ce pouvoir, à savoir "+getMaxUse()+" fois.");
+            player.sendMessage("§cVous avez atteint le nombre maximum d'utilisations pour ce pouvoir, à savoir "+getMaxUse()+" fois.");
             return false;
         }
 
@@ -152,7 +152,7 @@ public abstract class Power implements Cloneable{
             }
         } else {
             if (Main.isDebug()) {
-                getPlugin().getLogger().info("La mise à jour de la description de \""+getName()+"\" a échouer");
+                getPlugin().getLogger().info("La mise à jour de la description de \""+getName()+"\" a échoué");
             }
         }
     }

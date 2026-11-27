@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public enum Lames {
 
     Force(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().addBonusforce(10.0), "§cForce"),
-    Resistance(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().addBonusResi(10.0), "§9Resistance"),
+    Resistance(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().addBonusResi(10.0), "§9Résistance"),
     Coeur(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().setMaxHealth(event.getPlayer().getMaxHealth()+4.0), "§cCoeur"),
     NoFall(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().setNoFall(true), "§aNo Fall"),
     Speed(event -> GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().addSpeedAtInt(event.getPlayer(), 10), "§eSpeed"),
