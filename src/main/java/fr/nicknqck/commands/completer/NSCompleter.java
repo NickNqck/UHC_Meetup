@@ -40,16 +40,6 @@ public class NSCompleter implements TabCompleter {
                                 }
                             }
                         }
-                        @NonNull final List<Power> powers = new ArrayList<>(gamePlayer.getRole().getPowers());
-                        for (Power power : powers) {
-                            if (power instanceof CommandPower) {
-                                if (((CommandPower) power).getCommandType().equals(CommandPower.CommandType.NS)) {
-                                    if (((CommandPower) power).getArg0() != null) {
-                                        stringList.add(((CommandPower) power).getArg0());
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
                 if (!GameState.getInstance().hasRoleNull(((Player) commandSender).getUniqueId())) {
