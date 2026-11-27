@@ -30,6 +30,7 @@ public class ClaimCommand implements CommandExecutor {
 						}
 						sender.openInventory(inv);
 						sender.updateInventory();
+						return true;
 					} else {
 						for (ItemStack item : new java.util.ArrayList<>(role.toClaim)) {
 							if (gameState.countEmptySlots(sender) > 0) {

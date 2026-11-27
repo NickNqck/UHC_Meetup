@@ -23,8 +23,7 @@ public class Say implements CommandExecutor {
 			Bukkit.broadcastMessage(ChatRank.getPlayerGrade(sender).getFullPrefix()+sender.getName()+"§f:"+ ChatColor.translateAlternateColorCodes('&', sb.toString()));
 		} else {
 			Bukkit.broadcastMessage("[CONSOLE] :"+ChatColor.translateAlternateColorCodes('&', sb.toString()));
-			return true;
 		}
-		return false;
+		return true;
 	}
 }
