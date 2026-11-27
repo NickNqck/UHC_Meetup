@@ -67,7 +67,7 @@ public class KrystalTabCompletor implements TabCompleter {
         if (strings[0] != null) {
             final List<String> list = new ArrayList<>();
             for (final String string : stringList) {
-                if (string.startsWith(strings[0])) {
+                if (string.toLowerCase().startsWith(strings[strings.length - 1].toLowerCase())) {
                     list.add(string);
                 }
             }
