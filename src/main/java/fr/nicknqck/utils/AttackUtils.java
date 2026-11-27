@@ -40,8 +40,8 @@ public class AttackUtils implements Listener{
 				}
 			}
 		}
-		if (e.getEntity() instanceof Projectile) {
-			Projectile proj = (Projectile) e.getEntity();
+		if (e.getDamager() instanceof Projectile) {
+			Projectile proj = (Projectile) e.getDamager();
 			if (proj.getShooter() instanceof Entity) {
 				Entity shooter = (Entity) proj.getShooter();
 				if (CantAttack.contains(shooter.getUniqueId())) {
