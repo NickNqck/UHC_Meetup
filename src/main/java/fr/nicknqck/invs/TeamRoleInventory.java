@@ -143,7 +143,12 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                 }
                 if (iRole instanceof IUncompatibleRole) {
                     StringBuilder sb = new StringBuilder("§7Ce rôle est incompatible avec le/les role(s): ");
+                    boolean first = true;
                     for (IRoles<?> iRoles : ((IUncompatibleRole) iRole).getUncompatibleList()) {
+                        if (!first) {
+                            sb.append("§7, ");
+                        }
+                        first = false;
                         sb.append(iRoles.getItem().getItemMeta().getDisplayName());
                     }
                     stringList.add(sb.toString());
