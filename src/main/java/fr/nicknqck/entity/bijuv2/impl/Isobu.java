@@ -131,9 +131,9 @@ public class Isobu extends BijuBase {
         private void onDamage(@NonNull final EntityDamageEvent event) {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                 if (!(event.getEntity() instanceof Player))return;
-                if (Main.RANDOM.nextInt(100) <= 10) {
+                if (Main.RANDOM.nextInt(100) < 10) {
                     if (!checkUse((Player) event.getEntity(), new HashMap<>()))return;
-                    ((Player)event.getEntity()).setNoDamageTicks(10);
+                    event.setCancelled(true);
                 }
             }
         }

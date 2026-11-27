@@ -132,7 +132,7 @@ public class Saiken extends BijuBase {
             if (!(event.getDamager() instanceof Player))return;
             if (!(event.getEntity() instanceof Player))return;
             if (!event.getDamager().getUniqueId().equals(this.getRole().getPlayer()))return;
-            if (Main.RANDOM.nextInt(101) <= 5) {
+            if (Main.RANDOM.nextInt(100) < 5) {
                 if (!this.checkUse((Player) event.getDamager(), new HashMap<>()))return;
                 WorldUtils.createBeautyExplosion(event.getEntity().getLocation(), 2, false);
                 MathUtil.sendParticle(EnumParticle.EXPLOSION_NORMAL, event.getEntity().getLocation());
