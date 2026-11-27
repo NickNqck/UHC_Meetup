@@ -237,7 +237,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             }
             final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Kotoamatsukami");
             for (@NonNull final Player target : playerList) {
-                inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setName("§a"+target.getName()).toItemStack());
+                inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setSkullOwner(target.getName()).setName("§a"+target.getName()).toItemStack());
             }
             player.openInventory(inv);
             return false;

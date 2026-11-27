@@ -161,7 +161,7 @@ public class Genjutsu extends ItemPower implements Listener {
             if (map.isEmpty()) {
                 @NonNull final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Attaque");
                 for (@NonNull final Player target : Loc.getNearbyPlayersExcept(player, 30)) {
-                    inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setName("§c"+target.getName()).toItemStack());
+                    inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setSkullOwner(target.getName()).setName("§c"+target.getName()).toItemStack());
                 }
                 player.openInventory(inv);
                 return false;
@@ -215,7 +215,7 @@ public class Genjutsu extends ItemPower implements Listener {
             if (map.isEmpty()) {
                 @NonNull final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Izanami");
                 for (@NonNull final Player target : Loc.getNearbyPlayersExcept(player, 30)) {
-                    inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setName("§c"+target.getName()).toItemStack());
+                    inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(target.getName())).setSkullOwner(target.getName()).setName("§c"+target.getName()).toItemStack());
                 }
                 player.openInventory(inv);
                 return false;

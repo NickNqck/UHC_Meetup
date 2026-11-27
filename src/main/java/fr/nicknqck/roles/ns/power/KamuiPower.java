@@ -175,6 +175,7 @@ public class KamuiPower extends ItemPower implements Listener{
                     if (!gamePlayer.check())continue;
                     @NonNull final ItemStack item = GlobalUtils.getPlayerHead(p.getName());
                     inv.addItem(new ItemBuilder(item)
+                            .setSkullOwner(p.getName())
                             .setName("§b"+p.getName())
                             .setLore("§7Cliquez ici pour envoyer§c "+p.getDisplayName()+"§7 dans le§5 Kamui")
                             .toItemStack());
